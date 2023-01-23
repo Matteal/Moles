@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/game/levels/level2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/characters/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/game/blocks/crate.tscn" type="PackedScene" id=3]
+
+[node name="Node" type="Node"]
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 270, 345 )
+
+[node name="obstacles" type="Node" parent="." groups=["bodies"]]
+
+[node name="crate" parent="obstacles" groups=["bodies"] instance=ExtResource( 3 )]
+position = Vector2( 467, 460 )
+
+[node name="crate2" parent="obstacles" groups=["bodies"] instance=ExtResource( 3 )]
+position = Vector2( 459, 408 )
+
+[node name="crate3" parent="obstacles" groups=["bodies"] instance=ExtResource( 3 )]
+position = Vector2( 463, 432 )
+
+[node name="Node2D" parent="." instance=ExtResource( 1 )]
