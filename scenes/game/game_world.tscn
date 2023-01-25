@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/game/characters/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/blocks/crate.tscn" type="PackedScene" id=3]
 
-[node name="Node" type="Node"]
+[node name="Game_world" type="Node"]
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 2 )]
 position = Vector2( 270, 345 )

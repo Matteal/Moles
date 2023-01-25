@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/game/characters/KinematicBody2D.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ninja_sheet_4.png" type="Texture" id=2]
@@ -144,6 +144,9 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=27]
+extents = Vector2( 15.5, 9.5 )
+
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
@@ -154,6 +157,16 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
 animation = "run_right"
-frame = 7
+frame = 3
 speed_scale = 4.0
 playing = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -0.5, -1.5 )
+shape = SubResource( 27 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 34, 0 )
