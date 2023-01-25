@@ -1,10 +1,13 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scenes/game/characters/KinematicBody2D.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ninja_sheet_4.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 11.5, 16.5 )
+[sub_resource type="PhysicsMaterial" id=28]
+friction = 0.0
+
+[sub_resource type="RectangleShape2D" id=29]
+extents = Vector2( 11, 20.5 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
@@ -147,21 +150,29 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=27]
 extents = Vector2( 15.5, 9.5 )
 
-[node name="player" type="KinematicBody2D"]
+[node name="player" type="RigidBody2D"]
+mode = 2
+mass = 1.5
+physics_material_override = SubResource( 28 )
+custom_integrator = true
+contacts_reported = 3
 script = ExtResource( 1 )
+inertia = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.5, -1.5 )
-shape = SubResource( 1 )
+position = Vector2( 0, 0.5 )
+shape = SubResource( 29 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 26 )
-animation = "run_right"
-frame = 3
+animation = "idle"
+frame = 2
 speed_scale = 4.0
 playing = true
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( -0.5, -1.5 )

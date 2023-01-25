@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "RigidBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scenes/game/characters/KinematicBody2D.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": ""
+"GitAPI": "",
+"Player": ""
 }
 
 [application]
@@ -62,7 +68,7 @@ grab={
 
 [physics]
 
-common/enable_pause_aware_picking=true
+2d/default_gravity=900
 
 [rendering]
 
