@@ -44,15 +44,8 @@ var floor_h_velocity = 0.0
 var airborne_time = 1e20
 var shoot_time = 1e20
 
-#var Bullet = preload("res://player/Bullet.tscn")
-#var Enemy = preload("res://enemy/Enemy.tscn")
 
-#onready var sound_jump = $SoundJump
-#onready var sound_shoot = $SoundShoot
-#onready var sprite = $Sprite
-#onready var sprite_smoke = sprite.get_node(@"Smoke")
-#onready var animation_player = $AnimationPlayer
-#onready var bullet_shoot = $BulletShoot
+onready var _animated_sprite = $AnimatedSprite
 
 func _integrate_forces(s):
 	var lv = s.get_linear_velocity()
@@ -65,11 +58,7 @@ func _integrate_forces(s):
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
 	var jump = Input.is_action_pressed("jump")
-#	var shoot = Input.is_action_pressed("shoot")
-#	var spawn = Input.is_action_pressed("spawn")
-
-#	if spawn:
-#		call_deferred("_spawn_enemy_above")
+	
 
 	# Deapply prev floor velocity.
 	lv.x -= floor_h_velocity
@@ -86,12 +75,6 @@ func _integrate_forces(s):
 			found_floor = true
 			floor_index = x
 
-	# A good idea when implementing characters of all kinds,
-	# compensates for physics imprecision, as well as human reaction delay.
-#	if shoot dand not shooting:
-#		call_deferred("_shot_bullet")
-#	else:
-#		shoot_time += step
 
 	if found_floor:
 		airborne_time = 0.0
@@ -132,25 +115,16 @@ func _integrate_forces(s):
 			lv.y = -JUMP_VELOCITY
 			jumping = true
 			stopping_jump = false
-#			sound_jump.play()
 
 		# Check siding.
 		if lv.x < 0 and move_left:
 			new_siding_left = true
+			new_anim = "run_left"
 		elif lv.x > 0 and move_right:
 			new_siding_left = false
-		if jumping:
-			new_anim = "jumping"
-		elif abs(lv.x) < 0.1:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "idle_weapon"
-			else:
-				new_anim = "idle"
-		else:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "run_weapon"
-			else:
-				new_anim = "run"
+			new_anim = "run_right"
+		if abs(lv.x) < 0.1:
+			new_anim = "idle"
 	else:
 		# Process logic when the character is in the air.
 		if move_left and not move_right:
@@ -168,32 +142,17 @@ func _integrate_forces(s):
 			lv.x = sign(lv.x) * xv
 
 		if lv.y < 0:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "jumping_weapon"
-			else:
-				new_anim = "jumping"
+			new_anim = "jump"
 		else:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "falling_weapon"
-			else:
-				new_anim = "falling"
-
-	# Update siding.
-#	if new_siding_left != siding_left:
-#		if new_siding_left:
-#			sprite.scale.x = -1
-#		else:
-#			sprite.scale.x = 1
+			new_anim = "falling"
 
 		siding_left = new_siding_left
 
 	# Change animation.
 	if new_anim != anim:
 		anim = new_anim
-#		animation_player.play(anim)
+		_animated_sprite.play(anim)
 
-#	shooting = shoot
-	
 	# Apply floor velocity.
 	if found_floor:
 		floor_h_velocity = s.get_contact_collider_velocity_at_position(floor_index).x

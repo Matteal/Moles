@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://scenes/game/characters/KinematicBody2D.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ninja_sheet_4.png" type="Texture" id=2]
@@ -48,6 +48,41 @@ region = Rect2( 384, 0, 64, 64 )
 flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 448, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 1280, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 64, 1280, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 128, 1280, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 192, 1280, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 256, 1280, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=35]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 320, 1280, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=36]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 384, 1280, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=10]
 flags = 4
@@ -136,6 +171,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
 "loop": true,
 "name": "run_left",
@@ -166,8 +206,8 @@ shape = SubResource( 29 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 26 )
-animation = "idle"
-frame = 2
+animation = "jump"
+frame = 6
 speed_scale = 4.0
 playing = true
 
