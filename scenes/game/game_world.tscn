@@ -12,12 +12,13 @@ position = Vector2( 270, 345 )
 [node name="obstacles" type="Node" parent="." groups=["bodies"]]
 
 [node name="crate" parent="obstacles" groups=["bodies"] instance=ExtResource( 3 )]
-position = Vector2( 467, 460 )
+position = Vector2( 478, 501 )
 
 [node name="crate2" parent="obstacles" groups=["bodies"] instance=ExtResource( 3 )]
-position = Vector2( 459, 408 )
+position = Vector2( 473, 365 )
 
 [node name="crate3" parent="obstacles" groups=["bodies"] instance=ExtResource( 3 )]
 position = Vector2( 463, 432 )
 
 [node name="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 213, -118 )
