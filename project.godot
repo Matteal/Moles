@@ -68,7 +68,7 @@ grab={
 
 [physics]
 
-2d/default_gravity=900
+2d/default_gravity=700
 
 [rendering]
 

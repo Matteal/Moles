@@ -23,13 +23,13 @@ extends RigidBody2D
 #    - Friction cant be used, so floor velocity must be considered
 #      for moving platforms.
 
-const WALK_ACCEL = 500.0
-const WALK_DEACCEL = 500.0
-const WALK_MAX_VELOCITY = 140.0
+const WALK_ACCEL = 300.0
+const WALK_DEACCEL = 300.0
+const WALK_MAX_VELOCITY = 120.0
 const AIR_ACCEL = 100.0
 const AIR_DEACCEL = 100.0
-const JUMP_VELOCITY = 450
-const STOP_JUMP_FORCE = 450.0
+const JUMP_VELOCITY = 400
+const STOP_JUMP_FORCE = 80
 const MAX_SHOOT_POSE_TIME = 0.3
 const MAX_FLOOR_AIRBORNE_TIME = 0.15
 
@@ -47,6 +47,9 @@ var shoot_time = 1e20
 var held_object : Node2D
 
 onready var _animated_sprite = $AnimatedSprite
+
+var cumul : float = 0.0
+
 
 func _integrate_forces(s):
 	var lv = s.get_linear_velocity()
@@ -79,8 +82,10 @@ func _integrate_forces(s):
 
 	if found_floor:
 		airborne_time = 0.0
+		cumul = 0.0
 	else:
 		airborne_time += step # Time it spent in the air.
+		cumul += step
 
 	var on_floor = airborne_time < MAX_FLOOR_AIRBORNE_TIME
 
@@ -93,7 +98,8 @@ func _integrate_forces(s):
 			stopping_jump = true
 
 		if stopping_jump:
-			lv.y += STOP_JUMP_FORCE * step
+			lv.y += STOP_JUMP_FORCE * cumul
+			print(STOP_JUMP_FORCE * cumul)
 
 	if on_floor:
 		# Process logic when character is on floor.
@@ -158,7 +164,7 @@ func _integrate_forces(s):
 	grab_detection(lv)
 	if held_object:
 #		held_object.global_transform.origin = $HoldPosition.global_transform.origin
-		held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -55)
+		held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
 
 	# Apply floor velocity.
 	if found_floor:
@@ -205,11 +211,11 @@ func throw_object(lv):
 	print("throw")
 	remove_child(held_object)
 	get_node("../obstacles").add_child(held_object)
-	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -55)
+	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
 	held_object.set_deferred("mode", RigidBody2D.MODE_RIGID)
 	held_object.collision_mask = 1
 	held_object.collision_layer = 1
 	
 		
-	held_object.set_linear_velocity(Vector2(lv.x * 3, lv.y / 4 - JUMP_VELOCITY))
+	held_object.set_linear_velocity(Vector2(lv.x * 1.4, lv.y/2  - JUMP_VELOCITY/2))
 	held_object = null
