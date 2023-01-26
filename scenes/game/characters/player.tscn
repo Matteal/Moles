@@ -207,7 +207,7 @@ shape = SubResource( 29 )
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 26 )
 animation = "jump"
-frame = 6
+frame = 1
 speed_scale = 4.0
 playing = true
 

@@ -44,6 +44,7 @@ var floor_h_velocity = 0.0
 var airborne_time = 1e20
 var shoot_time = 1e20
 
+var held_object : Node2D
 
 onready var _animated_sprite = $AnimatedSprite
 
@@ -147,11 +148,17 @@ func _integrate_forces(s):
 			new_anim = "falling"
 
 		siding_left = new_siding_left
-
+	
 	# Change animation.
 	if new_anim != anim:
 		anim = new_anim
 		_animated_sprite.play(anim)
+
+	# grab interractions
+	grab_detection(lv)
+	if held_object:
+#		held_object.global_transform.origin = $HoldPosition.global_transform.origin
+		held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -55)
 
 	# Apply floor velocity.
 	if found_floor:
@@ -162,3 +169,47 @@ func _integrate_forces(s):
 	lv += s.get_total_gravity() * step
 	s.set_linear_velocity(lv)
 
+func grab_detection(lv):
+	if lv.x < 0:
+		$RayCast2D.set_cast_to(Vector2(-35, 0))
+	elif lv.x > 0:
+		$RayCast2D.set_cast_to(Vector2(35, 0))
+	if abs(lv.x) < 0.1:
+		$RayCast2D.set_cast_to(Vector2.ZERO)
+		
+	if Input.is_action_just_pressed("grab"):
+		if held_object != null:
+			throw_object(lv)
+		elif $RayCast2D.get_collider():
+			grab($RayCast2D.get_collider())
+#		for object in $Hitbox.get_overlapping_bodies():
+#			if object.get_parent().name == "obstacles":
+#				grab(object)
+				
+
+		
+func grab (object):
+	if held_object != null:
+		return
+		
+	print(object.name)
+	held_object = object
+	held_object.get_parent().remove_child(held_object)
+	add_child(held_object)
+	held_object.set_deferred("mode", RigidBody2D.MODE_STATIC)
+	held_object.collision_mask = 0
+	held_object.collision_layer = 0
+	
+	
+func throw_object(lv):
+	print("throw")
+	remove_child(held_object)
+	get_node("../obstacles").add_child(held_object)
+	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -55)
+	held_object.set_deferred("mode", RigidBody2D.MODE_RIGID)
+	held_object.collision_mask = 1
+	held_object.collision_layer = 1
+	
+		
+	held_object.set_linear_velocity(Vector2(lv.x * 3, lv.y / 4 - JUMP_VELOCITY))
+	held_object = null
