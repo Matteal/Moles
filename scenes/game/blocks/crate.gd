@@ -12,8 +12,11 @@ var held = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	#create a crate with a random texture here
 	# with $Sprite.<...>
+	$Sprite.set_region_rect(Rect2(5, (randi() % 9) * 1176, 1169, 1169))
+	print($Sprite.is_region())
 	pass # Replace with function body.
 
 func grabbed(player):
@@ -24,8 +27,8 @@ func grabbed(player):
 	
 	p = player
 
-func _physics_process(delta):
-	if !held: # basic behaviour
-		return
+#func _physics_process(delta):
+#	if !held: # basic behaviour
+#		return
 	
 	set_global_position(Vector2(500, 300))

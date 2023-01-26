@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/game/levels/hole.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/levels/cave.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/game/characters/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/blocks/crate.tscn" type="PackedScene" id=3]
 
@@ -21,4 +21,3 @@ position = Vector2( 473, 365 )
 position = Vector2( 463, 432 )
 
 [node name="Node2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 213, -118 )
