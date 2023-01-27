@@ -1,4 +1,4 @@
-class_name Player
+class_name Player2
 extends RigidBody2D
 
 # Character Demo, written by Juan Linietsky.
@@ -23,12 +23,12 @@ extends RigidBody2D
 #    - Friction cant be used, so floor velocity must be considered
 #      for moving platforms.
 
-const WALK_ACCEL = 300.0
-const WALK_DEACCEL = 300.0
-const WALK_MAX_VELOCITY = 120.0
-const AIR_ACCEL = 100.0
-const AIR_DEACCEL = 100.0
-const JUMP_VELOCITY = 400
+const WALK_ACCEL = 1300.0
+const WALK_DEACCEL = 1300.0
+const WALK_MAX_VELOCITY = 200.0
+const AIR_ACCEL = 300.0
+const AIR_DEACCEL = 300.0
+const JUMP_VELOCITY = 450
 const STOP_JUMP_FORCE = 80
 const MAX_SHOOT_POSE_TIME = 0.3
 const MAX_FLOOR_AIRBORNE_TIME = 0.15

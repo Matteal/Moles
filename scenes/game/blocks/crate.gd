@@ -15,7 +15,7 @@ func _ready():
 	randomize()
 	#create a crate with a random texture here
 	# with $Sprite.<...>
-	$Sprite.set_region_rect(Rect2(5, (randi() % 9) * 1176, 1169, 1169))
+	$Sprite.set_frame(randi() % 9)
 	print($Sprite.is_region())
 	pass # Replace with function body.
 
