@@ -1,4 +1,4 @@
-class_name Player
+class_name Player2
 extends RigidBody2D
 
 # Character Demo, written by Juan Linietsky.

@@ -15,13 +15,13 @@ _global_script_classes=[ {
 "path": "res://addons/godot-git-plugin/git_api.gdns"
 }, {
 "base": "RigidBody2D",
-"class": "Player",
+"class": "Player2",
 "language": "GDScript",
 "path": "res://scenes/game/characters/KinematicBody2D.gd"
 } ]
 _global_script_class_icons={
 "GitAPI": "",
-"Player": ""
+"Player2": ""
 }
 
 [application]
