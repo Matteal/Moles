@@ -33,6 +33,10 @@ script = SubResource( 1 )
 [node name="player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 270, 345 )
 
+[node name="player2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 632, 324 )
+player_index = 1
+
 [node name="obstacles" type="Node" parent="." groups=["bodies"]]
 
 [node name="rectangle" parent="obstacles" instance=ExtResource( 3 )]

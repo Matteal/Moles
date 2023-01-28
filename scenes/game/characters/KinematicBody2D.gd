@@ -50,6 +50,16 @@ onready var _animated_sprite = $AnimatedSprite
 
 var cumul : float = 0.0
 
+#controller
+export var player_index = 0;
+
+var move_left_action = ["move_left", "move_left2"]
+var move_right_action = ["move_right", "move_right2"]
+var jump_action = ["jump", "jump2"]
+var grab_action = ["grab", "grab2"]
+
+func _ready():
+	print($AnimatedSprite.get_texture())
 
 func _integrate_forces(s):
 	var lv = s.get_linear_velocity()
@@ -59,9 +69,10 @@ func _integrate_forces(s):
 	var new_siding_left = siding_left
 
 	# Get player input.
-	var move_left = Input.is_action_pressed("move_left")
-	var move_right = Input.is_action_pressed("move_right")
-	var jump = Input.is_action_pressed("jump")
+	var move_left = Input.is_action_pressed(move_left_action[player_index])
+	var move_right = Input.is_action_pressed(move_right_action[player_index])
+	var jump = Input.is_action_pressed(jump_action[player_index])
+	var grab = Input.is_action_just_pressed(grab_action[player_index])
 	
 
 	# Deapply prev floor velocity.
@@ -161,7 +172,8 @@ func _integrate_forces(s):
 		_animated_sprite.play(anim)
 
 	# grab interractions
-	grab_detection(lv)
+	if grab:
+		grab_detection(lv)
 	if held_object:
 #		held_object.global_transform.origin = $HoldPosition.global_transform.origin
 		held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
@@ -183,12 +195,11 @@ func grab_detection(lv):
 	if abs(lv.x) < 0.1:
 		$RayCast2D.set_cast_to(Vector2.ZERO)
 		
-	if Input.is_action_just_pressed("grab"):
-		if held_object != null:
-			throw_object(lv)
-		elif $RayCast2D.get_collider():
-			if $RayCast2D.get_collider().get_parent().name == "obstacles":
-				grab($RayCast2D.get_collider())
+	if held_object != null:
+		throw_object(lv)
+	elif $RayCast2D.get_collider():
+		if $RayCast2D.get_collider().get_parent().name == "obstacles":
+			grab($RayCast2D.get_collider())
 #		for object in $Hitbox.get_overlapping_bodies():
 #			if object.get_parent().name == "obstacles":
 #				grab(object)
