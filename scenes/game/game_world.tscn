@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/game/levels/cave.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/game/characters/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/blocks/rectangle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/game/blocks/generator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/game/blocks/square.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/game/blocks/slope.tscn" type="PackedScene" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
@@ -42,6 +43,9 @@ position = Vector2( 676, 478 )
 
 [node name="square2" parent="obstacles" instance=ExtResource( 5 )]
 position = Vector2( 629, 373 )
+
+[node name="slope" parent="obstacles" instance=ExtResource( 6 )]
+position = Vector2( 478, 482 )
 
 [node name="background" parent="." instance=ExtResource( 1 )]
 position = Vector2( 27, -29 )
