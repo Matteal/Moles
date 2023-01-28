@@ -181,7 +181,7 @@ func _integrate_forces(s):
 		grab_detection(lv)
 	if held_object:
 #		held_object.global_transform.origin = $HoldPosition.global_transform.origin
-		held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
+		held_object.global_transform.origin = self.global_transform.origin + dir_ray.normalized() * 35
 
 	# Apply floor velocity.
 	if found_floor:
@@ -231,11 +231,15 @@ func throw_object(lv):
 	print("throw")
 	remove_child(held_object)
 	get_node("../obstacles").add_child(held_object)
-	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
+	held_object.global_transform.origin = self.global_transform.origin + $RayCast2D.get_cast_to()
+#	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
 	held_object.set_deferred("mode", RigidBody2D.MODE_RIGID)
 	held_object.collision_mask = 1
 	held_object.collision_layer = 1
 	
-		
-	held_object.set_linear_velocity(Vector2(lv.x * 1.4, lv.y/2  - JUMP_VELOCITY/2))
+#	held_object.set_linear_velocity(Vector2(lv.x * 1.4, lv.y/2  - JUMP_VELOCITY/2))
+	if $RayCast2D.get_cast_to().y <= 0: # add a small push when thrown upward
+		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 300 + lv * 0.5 + Vector2(0, -JUMP_VELOCITY/2.0))
+	else:
+		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 300 + lv * 0.5 + Vector2(0, JUMP_VELOCITY/2.0))
 	held_object = null
