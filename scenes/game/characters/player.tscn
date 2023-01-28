@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/sprites/ninja_sheet_4.png" type="Texture" id=2]
 
 [sub_resource type="PhysicsMaterial" id=28]
-friction = 0.0
+friction = 0.6
 
 [sub_resource type="RectangleShape2D" id=29]
 extents = Vector2( 8, 14.5 )
@@ -205,7 +205,7 @@ shape = SubResource( 29 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
 animation = "idle"
-frame = 4
+frame = 2
 speed_scale = 4.0
 playing = true
 

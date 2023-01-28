@@ -59,7 +59,8 @@ var jump_action = ["jump", "jump2"]
 var grab_action = ["grab", "grab2"]
 
 func _ready():
-	print($AnimatedSprite.get_texture())
+#	print($AnimatedSprite.get_texture())
+	pass
 
 func _integrate_forces(s):
 	var lv = s.get_linear_velocity()

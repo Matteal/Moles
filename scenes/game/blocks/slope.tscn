@@ -9,6 +9,7 @@ flags = 4
 load_path = "res://.import/AlterNBlockMap-min.png-ea308c21c63340eb72c16fc4611265d3.stex"
 
 [node name="slope" type="RigidBody2D"]
+mass = 4.6
 physics_material_override = SubResource( 2 )
 contacts_reported = 3
 contact_monitor = true

@@ -93,6 +93,7 @@ grab2={
 
 [physics]
 
+common/physics_fps=120
 2d/default_gravity=700
 
 [rendering]
