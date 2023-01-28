@@ -56,6 +56,7 @@ export var player_index = 0;
 var move_left_action = ["move_left", "move_left2"]
 var move_right_action = ["move_right", "move_right2"]
 var jump_action = ["jump", "jump2"]
+var down_action = ["down", "down2"]
 var grab_action = ["grab", "grab2"]
 
 func _ready():
@@ -73,6 +74,7 @@ func _integrate_forces(s):
 	var move_left = Input.is_action_pressed(move_left_action[player_index])
 	var move_right = Input.is_action_pressed(move_right_action[player_index])
 	var jump = Input.is_action_pressed(jump_action[player_index])
+	var down = Input.is_action_pressed(down_action[player_index])
 	var grab = Input.is_action_just_pressed(grab_action[player_index])
 	
 
@@ -111,7 +113,6 @@ func _integrate_forces(s):
 
 		if stopping_jump:
 			lv.y += STOP_JUMP_FORCE * cumul
-			print(STOP_JUMP_FORCE * cumul)
 
 	if on_floor:
 		# Process logic when character is on floor.
@@ -173,6 +174,9 @@ func _integrate_forces(s):
 		_animated_sprite.play(anim)
 
 	# grab interractions
+	var dir_ray = int(move_left) * Vector2.LEFT + int(move_right) * Vector2.RIGHT \
+				+ int(jump) * Vector2.UP + int(down) * Vector2.DOWN
+	$RayCast2D.set_cast_to(dir_ray.normalized() * 35)
 	if grab:
 		grab_detection(lv)
 	if held_object:
@@ -189,12 +193,12 @@ func _integrate_forces(s):
 	s.set_linear_velocity(lv)
 
 func grab_detection(lv):
-	if lv.x < 0:
-		$RayCast2D.set_cast_to(Vector2(-35, 0))
-	elif lv.x > 0:
-		$RayCast2D.set_cast_to(Vector2(35, 0))
-	if abs(lv.x) < 0.1:
-		$RayCast2D.set_cast_to(Vector2.ZERO)
+#	if lv.x < 0:
+#		$RayCast2D.set_cast_to(Vector2(-35, 0))
+#	elif lv.x > 0:
+#		$RayCast2D.set_cast_to(Vector2(35, 0))
+#	if abs(lv.x) < 0.1:
+#		$RayCast2D.set_cast_to(Vector2.ZERO)
 		
 	if held_object != null:
 		throw_object(lv)
