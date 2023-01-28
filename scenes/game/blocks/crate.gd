@@ -14,10 +14,13 @@ var held = false
 func _ready():
 #	if node.get_class() == "Node":
 	var type = self.filename.get_slice('/', 5).get_slice('.', 0)
-	if type == "square":	
-		$Sprite.set_frame(randi() % 9)
-	elif type == "rectangle":
-		$Sprite.set_frame(randi() % 3)
+	match type:
+		"square":	
+			$Sprite.set_frame(randi() % 9)
+		"rectangle":
+			$Sprite.set_frame(randi() % 3)
+		"slope":
+			$Sprite.set_frame(randi() % 3)
 		
 	pass # Replace with function body.
 
