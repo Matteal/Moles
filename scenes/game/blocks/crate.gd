@@ -40,5 +40,23 @@ func grabbed(player):
 #func _physics_process(delta):
 #	if !held: # basic behaviour
 #		return
+
+var thread := Thread.new()
+
+func is_massive(second):
 	
-	set_global_position(Vector2(500, 300))
+	yield(get_tree().create_timer(second), "timeout")
+	print("return 0")
+	
+
+func throw():
+	connect("body_entered", self, "_on_rectangle_body_entered")
+	
+	set_deferred("set_mass", 20.0)
+	set_deferred("set_linear_damp", 0)
+
+func _on_rectangle_body_entered(body):
+	disconnect("body_entered", self, "_on_rectangle_body_entered")
+	
+	set_deferred("set_mass", 4.6)
+	set_deferred("set_linear_damp", 0.1)

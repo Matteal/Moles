@@ -219,8 +219,8 @@ func grab (object):
 	held_object = object
 	held_object.unfreeze()
 	
-	held_object.get_parent().remove_child(held_object)
-	add_child(held_object)
+	held_object.get_parent().set_deferred("remove_child", held_object)
+	set_deferred("add_child", held_object)
 	held_object.set_deferred("mode", RigidBody2D.MODE_STATIC)
 	held_object.collision_mask = 0
 	held_object.collision_layer = 0
@@ -229,8 +229,9 @@ func grab (object):
 	
 func throw_object(lv):
 	print("throw")
-	remove_child(held_object)
-	get_node("../obstacles").add_child(held_object)
+	
+	set_deferred("remove_child", held_object)
+	get_node("../obstacles").set_deferred("add_child", held_object)
 	held_object.global_transform.origin = self.global_transform.origin + $RayCast2D.get_cast_to()
 #	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
 	held_object.set_deferred("mode", RigidBody2D.MODE_RIGID)
@@ -242,4 +243,7 @@ func throw_object(lv):
 		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 300 + lv * 0.5 + Vector2(0, -JUMP_VELOCITY/2.0))
 	else:
 		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 300 + lv * 0.5 + Vector2(0, JUMP_VELOCITY/2.0))
+	
+	held_object.throw()
+	
 	held_object = null
