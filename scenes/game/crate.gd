@@ -26,7 +26,8 @@ func _ready():
 
 func unfreeze():
 	for body in get_colliding_bodies():
-		if get_node("../obstacles") == body.get_parent():
+		print(get_parent().get_name() + " + " + body.get_parent().get_name())
+		if get_parent() == body.get_parent():
 			body.set_sleeping(false)
 	
 func grabbed(player):

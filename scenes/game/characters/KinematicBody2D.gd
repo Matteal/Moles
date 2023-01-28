@@ -200,12 +200,14 @@ func grab (object):
 		
 	print(object.name)
 	held_object = object
+	held_object.unfreeze()
+	
 	held_object.get_parent().remove_child(held_object)
 	add_child(held_object)
 	held_object.set_deferred("mode", RigidBody2D.MODE_STATIC)
 	held_object.collision_mask = 0
 	held_object.collision_layer = 0
-	held_object.unfreeze()
+	
 	
 	
 func throw_object(lv):
