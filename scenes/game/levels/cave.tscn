@@ -33,18 +33,14 @@ anchor_bottom = 1.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="background2" type="TextureRect" parent="ParallaxBackgroundBack"]
+[node name="ParallaxBackgroundFore" type="ParallaxBackground" parent="."]
+layer = 100
+
+[node name="background2" type="TextureRect" parent="ParallaxBackgroundFore"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
 expand = true
-
-[node name="ParallaxBackgroundFore" type="ParallaxBackground" parent="."]
-layer = 100
-
-[node name="foreground" type="TextureRect" parent="ParallaxBackgroundFore"]
-anchor_right = 1.0
-anchor_bottom = 1.0
 
 [node name="Walls" type="Node" parent="."]
 
@@ -63,7 +59,7 @@ shape = SubResource( 1 )
 [node name="ground2" type="StaticBody2D" parent="Walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/ground2"]
-position = Vector2( 492, 559 )
+position = Vector2( 491, 557 )
 shape = SubResource( 2 )
 
 [node name="ceilling" type="StaticBody2D" parent="Walls"]
