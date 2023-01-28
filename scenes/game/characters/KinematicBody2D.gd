@@ -187,7 +187,8 @@ func grab_detection(lv):
 		if held_object != null:
 			throw_object(lv)
 		elif $RayCast2D.get_collider():
-			grab($RayCast2D.get_collider())
+			if $RayCast2D.get_collider().get_parent().name == "obstacles":
+				grab($RayCast2D.get_collider())
 #		for object in $Hitbox.get_overlapping_bodies():
 #			if object.get_parent().name == "obstacles":
 #				grab(object)
