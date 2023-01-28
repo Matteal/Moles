@@ -9,7 +9,6 @@
 extents = Vector2( 31, 20.5 )
 
 [node name="rectangle" type="RigidBody2D"]
-scale = Vector2( 0.7, 0.7 )
 physics_material_override = SubResource( 2 )
 contacts_reported = 3
 contact_monitor = true

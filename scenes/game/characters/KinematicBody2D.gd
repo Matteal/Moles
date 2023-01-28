@@ -205,6 +205,7 @@ func grab (object):
 	held_object.set_deferred("mode", RigidBody2D.MODE_STATIC)
 	held_object.collision_mask = 0
 	held_object.collision_layer = 0
+	held_object.unfreeze()
 	
 	
 func throw_object(lv):

@@ -24,6 +24,11 @@ func _ready():
 		
 	pass # Replace with function body.
 
+func unfreeze():
+	for body in get_colliding_bodies():
+		if get_node("../obstacles") == body.get_parent():
+			body.set_sleeping(false)
+	
 func grabbed(player):
 	get_parent().remove_child(self)
 	player.add_child(self)
