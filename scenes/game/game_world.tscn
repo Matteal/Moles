@@ -27,7 +27,7 @@ func _ready():
 [node name="Game_world" type="Node"]
 script = SubResource( 1 )
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 2 )]
+[node name="player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 270, 345 )
 
 [node name="obstacles" type="Node" parent="." groups=["bodies"]]

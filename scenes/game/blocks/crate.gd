@@ -13,8 +13,8 @@ var held = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	#create a crate with a random texture here
-	# with $Sprite.<...>
+#	if node.get_class() == "Node":
+	print(self.get_class())
 	$Sprite.set_frame(randi() % 9)
 	print($Sprite.is_region())
 	pass # Replace with function body.
