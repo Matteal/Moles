@@ -12,11 +12,13 @@ var held = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	randomize()
 #	if node.get_class() == "Node":
-	print(self.get_class())
-	$Sprite.set_frame(randi() % 9)
-	print($Sprite.is_region())
+	var type = self.filename.get_slice('/', 5).get_slice('.', 0)
+	if type == "square":	
+		$Sprite.set_frame(randi() % 9)
+	elif type == "rectangle":
+		$Sprite.set_frame(randi() % 3)
+		
 	pass # Replace with function body.
 
 func grabbed(player):

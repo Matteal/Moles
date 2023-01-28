@@ -1,18 +1,58 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/game/blocks/crate.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/NBlockMAP-min.png" type="Texture" id=2]
 
 [sub_resource type="PhysicsMaterial" id=2]
 
+[sub_resource type="GDScript" id=3]
+script/source = "extends RigidBody2D
+
+#var player = load(\"res://scenes/game/characters/player.tscn\").instance()
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+var p : Node2D
+
+var held = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	randomize()
+#	if node.get_class() == \"Node\":
+	var type = self.filename.get_slice('/', 5).get_slice('.', 0)
+	if type == \"square\":	
+		$Sprite.set_frame(randi() % 9)
+		print($Sprite.is_region())
+	elif type == \"rectangle\":
+		$Sprite.set_frame(randi() % 3)
+		
+	pass # Replace with function body.
+
+func grabbed(player):
+	get_parent().remove_child(self)
+	player.add_child(self)
+	set_mode(RigidBody2D.MODE_KINEMATIC)
+	print(self.get_parent().name)
+	
+	p = player
+
+#func _physics_process(delta):
+#	if !held: # basic behaviour
+#		return
+	
+	set_global_position(Vector2(500, 300))
+"
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 23, 23 )
 
-[node name="crate" type="RigidBody2D"]
+[node name="square" type="RigidBody2D"]
 physics_material_override = SubResource( 2 )
 contacts_reported = 3
 contact_monitor = true
-script = ExtResource( 1 )
+script = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -29, -29 )

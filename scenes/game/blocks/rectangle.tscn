@@ -8,14 +8,14 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31, 20.5 )
 
-[node name="crate" type="RigidBody2D"]
+[node name="rectangle" type="RigidBody2D"]
 physics_material_override = SubResource( 2 )
 contacts_reported = 3
 contact_monitor = true
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -29, -29 )
+position = Vector2( -36, -26 )
 scale = Vector2( 0.308511, 0.308511 )
 texture = ExtResource( 2 )
 centered = false
@@ -25,5 +25,4 @@ region_enabled = true
 region_rect = Rect2( 0, -1, 469, 331 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 7, -3 )
 shape = SubResource( 1 )
