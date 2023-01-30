@@ -1,27 +1,8 @@
 class_name Player2
 extends RigidBody2D
 
-# Character Demo, written by Juan Linietsky.
-#
-#  Implementation of a 2D Character controller.
-#  This implementation uses the physics engine for
-#  controlling a character, in a very similar way
-#  than a 3D character controller would be implemented.
-#
-#  Using the physics engine for this has the main advantages:
-#    - Easy to write.
-#    - Interaction with other physics-based objects is free
-#    - Only have to deal with the object linear velocity, not position
-#    - All collision/area framework available
-#
-#  But also has the following disadvantages:
-#    - Objects may bounce a little bit sometimes
-#    - Going up ramps sends the chracter flying up, small hack is needed.
-#    - A ray collider is needed to avoid sliding down on ramps and
-#      undesiderd bumps, small steps and rare numerical precision errors.
-#      (another alternative may be to turn on friction when the character is not moving).
-#    - Friction cant be used, so floor velocity must be considered
-#      for moving platforms.
+# Class written by Mattéo DERANSART
+# Using Character Demo, written by Juan Linietsky.
 
 const WALK_ACCEL = 1300.0
 const WALK_DEACCEL = 1300.0
@@ -33,20 +14,19 @@ const STOP_JUMP_FORCE = 80
 const MAX_SHOOT_POSE_TIME = 0.3
 const MAX_FLOOR_AIRBORNE_TIME = 0.15
 
+const LAUNCH_FORCE = 800
+const PARABOLA_FORCE = 200
+
 var anim = ""
 var siding_left = false
 var jumping = false
 var stopping_jump = false
 var shooting = false
-
-var floor_h_velocity = 0.0
-
-var airborne_time = 1e20
-var shoot_time = 1e20
-
 var held_object : Node2D
 
-onready var _animated_sprite = $AnimatedSprite
+var floor_h_velocity = 0.0
+var airborne_time = 1e20
+var shoot_time = 1e20
 
 var cumul : float = 0.0
 
@@ -171,7 +151,7 @@ func _integrate_forces(s):
 	# Change animation.
 	if new_anim != anim:
 		anim = new_anim
-		_animated_sprite.play(anim)
+		$AnimatedSprite.play(anim)
 
 	# grab interractions
 	var dir_ray = int(move_left) * Vector2.LEFT + int(move_right) * Vector2.RIGHT \
@@ -180,7 +160,6 @@ func _integrate_forces(s):
 	if grab:
 		grab_detection(lv)
 	if held_object:
-#		held_object.global_transform.origin = $HoldPosition.global_transform.origin
 		held_object.global_transform.origin = self.global_transform.origin + dir_ray.normalized() * 35
 
 	# Apply floor velocity.
@@ -193,29 +172,17 @@ func _integrate_forces(s):
 	s.set_linear_velocity(lv)
 
 func grab_detection(lv):
-#	if lv.x < 0:
-#		$RayCast2D.set_cast_to(Vector2(-35, 0))
-#	elif lv.x > 0:
-#		$RayCast2D.set_cast_to(Vector2(35, 0))
-#	if abs(lv.x) < 0.1:
-#		$RayCast2D.set_cast_to(Vector2.ZERO)
-		
 	if held_object != null:
 		throw_object(lv)
 	elif $RayCast2D.get_collider():
 		if $RayCast2D.get_collider().get_parent().name == "obstacles":
 			grab($RayCast2D.get_collider())
-#		for object in $Hitbox.get_overlapping_bodies():
-#			if object.get_parent().name == "obstacles":
-#				grab(object)
-				
 
 		
 func grab (object):
 	if held_object != null:
 		return
 		
-	print(object.name)
 	held_object = object
 	held_object.unfreeze()
 	
@@ -227,21 +194,17 @@ func grab (object):
 	
 	
 	
-func throw_object(lv):
-	print("throw")
-	
+func throw_object(lv):	
 	set_deferred("remove_child", held_object)
 	get_node("../obstacles").set_deferred("add_child", held_object)
 	held_object.global_transform.origin = self.global_transform.origin + $RayCast2D.get_cast_to()
-#	held_object.global_transform.origin = self.global_transform.origin + Vector2(0, -45)
 	held_object.set_deferred("mode", RigidBody2D.MODE_RIGID)
 	held_object.collision_mask = 1
 	held_object.collision_layer = 1
 	
-#	held_object.set_linear_velocity(Vector2(lv.x * 1.4, lv.y/2  - JUMP_VELOCITY/2))
-	var throw_impulse = $RayCast2D.get_cast_to().normalized() * 800 + lv * 0.5
-	if $RayCast2D.get_cast_to().y == 0 and $RayCast2D.get_cast_to().x != 0: # add a small push when thrown upward
-		throw_impulse.y += -JUMP_VELOCITY/2.0
+	var throw_impulse = $RayCast2D.get_cast_to().normalized() * LAUNCH_FORCE + lv * 0.5
+	if $RayCast2D.get_cast_to().y == 0 and $RayCast2D.get_cast_to().x != 0: # add a small parabolla
+		throw_impulse.y += -PARABOLA_FORCE
 	
 	held_object.set_linear_velocity(throw_impulse)
 	held_object.throw(self)
