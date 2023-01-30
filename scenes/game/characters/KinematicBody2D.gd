@@ -244,6 +244,6 @@ func throw_object(lv):
 		throw_impulse.y += -JUMP_VELOCITY/2.0
 	
 	held_object.set_linear_velocity(throw_impulse)
-	held_object.throw()
+	held_object.throw(self)
 	
 	held_object = null
