@@ -239,11 +239,11 @@ func throw_object(lv):
 	held_object.collision_layer = 1
 	
 #	held_object.set_linear_velocity(Vector2(lv.x * 1.4, lv.y/2  - JUMP_VELOCITY/2))
-	if $RayCast2D.get_cast_to().y <= 0: # add a small push when thrown upward
-		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 800 + lv * 0.5 + Vector2(0, -JUMP_VELOCITY/2.0))
-	else:
-		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 800 + lv * 0.5 + Vector2(0, JUMP_VELOCITY/2.0))
+	var throw_impulse = $RayCast2D.get_cast_to().normalized() * 800 + lv * 0.5
+	if $RayCast2D.get_cast_to().y == 0 and $RayCast2D.get_cast_to().x != 0: # add a small push when thrown upward
+		throw_impulse.y += -JUMP_VELOCITY/2.0
 	
+	held_object.set_linear_velocity(throw_impulse)
 	held_object.throw()
 	
 	held_object = null

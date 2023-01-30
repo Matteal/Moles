@@ -206,7 +206,7 @@ shape = SubResource( 29 )
 z_index = 5
 frames = SubResource( 26 )
 animation = "idle"
-frame = 7
+frame = 3
 speed_scale = 4.0
 playing = true
 
