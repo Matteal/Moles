@@ -240,9 +240,9 @@ func throw_object(lv):
 	
 #	held_object.set_linear_velocity(Vector2(lv.x * 1.4, lv.y/2  - JUMP_VELOCITY/2))
 	if $RayCast2D.get_cast_to().y <= 0: # add a small push when thrown upward
-		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 300 + lv * 0.5 + Vector2(0, -JUMP_VELOCITY/2.0))
+		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 800 + lv * 0.5 + Vector2(0, -JUMP_VELOCITY/2.0))
 	else:
-		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 300 + lv * 0.5 + Vector2(0, JUMP_VELOCITY/2.0))
+		held_object.set_linear_velocity($RayCast2D.get_cast_to().normalized() * 800 + lv * 0.5 + Vector2(0, JUMP_VELOCITY/2.0))
 	
 	held_object.throw()
 	
