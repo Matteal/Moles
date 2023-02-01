@@ -9,6 +9,10 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
 
+var num_players: int = 2 # number of joysticks connected
+
+var players: Array = [] # array to hold player instances
+var input_maps: Array = [] # array to hold input_map dict for each player
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,7 +21,7 @@ var Player = load(\"res://scenes/game/characters/player.tscn\")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for player_index in range(2):
+	for player_index in range(num_players):
 		var spawn = get_node(\"Level/SpawnPoint{n}\".format({\"n\":player_index}))
 		var new_player = Player.instance()
 		add_child(new_player)
@@ -25,13 +29,18 @@ func _ready():
 		new_player.player_index = player_index
 		new_player.global_transform.origin = spawn.global_transform.origin
 		
+		players.append(new_player)
+		
 	randomize()
+	print(\"world\")
 	pass # Replace with function body.
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
 "
 
 [node name="Game_world" type="Node"]

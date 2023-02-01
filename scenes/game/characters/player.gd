@@ -55,8 +55,8 @@ func _integrate_forces(s):
 	# Get player input.
 	var move_left = Input.is_action_pressed(left_action[player_index])
 	var move_right = Input.is_action_pressed(right_action[player_index])
-	var down = Input.is_action_pressed(down_action[player_index])
 	var up = Input.is_action_pressed(up_action[player_index])
+	var down = Input.is_action_pressed(down_action[player_index])
 	var jump = Input.is_action_pressed(jump_action[player_index])
 	var grab = Input.is_action_just_pressed(grab_action[player_index])
 	
@@ -158,7 +158,7 @@ func _integrate_forces(s):
 
 	# grab interractions
 	var dir_ray = int(move_left) * Vector2.LEFT + int(move_right) * Vector2.RIGHT \
-				+ int(jump) * Vector2.UP + int(down) * Vector2.DOWN
+				+ int(up) * Vector2.UP + int(down) * Vector2.DOWN
 	$RayCast2D.set_cast_to(dir_ray.normalized() * 35)
 	if grab:
 		grab_detection(lv)

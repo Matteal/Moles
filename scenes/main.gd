@@ -23,11 +23,14 @@ func joy_con_changed(deviceid,isConnected):
 	else:
 		print("Joystick " + str(deviceid) + " disconnected")
 
-func add_player(player_index: int):
-	pass #choose between controler and keyboard
-	
-func set_player_to_keyboard(player_index: int):
-	pass
-	
-func set_player_to_controller(player_index: int, device_id: int):
-	pass
+
+# TODO get automatic joystick connection
+# see https://github.com/sustainablelab/eat-and-poop/blob/master/scripts/World.gd
+#func add_player(player_index: int):
+#	pass #choose between controler and keyboard
+#
+#func set_player_to_keyboard(player_index: int):
+#	pass
+#
+#func set_player_to_controller(player_index: int, device_id: int):
+#	pass
