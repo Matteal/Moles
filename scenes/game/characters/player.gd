@@ -1,4 +1,4 @@
-class_name Player2
+class_name player
 extends RigidBody2D
 
 # Class written by Mattéo DERANSART
@@ -31,12 +31,14 @@ var shoot_time = 1e20
 var cumul : float = 0.0
 
 #controller
-export var player_index = 0;
+export var player_index = 0
+export var use_keyboard = true
 
-var move_left_action = ["move_left", "move_left2"]
-var move_right_action = ["move_right", "move_right2"]
-var jump_action = ["jump", "jump2"]
+var left_action = ["move_left", "move_left2"]
+var right_action = ["move_right", "move_right2"]
+var up_action = ["up", "up2"]
 var down_action = ["down", "down2"]
+var jump_action = ["jump", "jump2"]
 var grab_action = ["grab", "grab2"]
 
 func _ready():
@@ -51,10 +53,11 @@ func _integrate_forces(s):
 	var new_siding_left = siding_left
 
 	# Get player input.
-	var move_left = Input.is_action_pressed(move_left_action[player_index])
-	var move_right = Input.is_action_pressed(move_right_action[player_index])
-	var jump = Input.is_action_pressed(jump_action[player_index])
+	var move_left = Input.is_action_pressed(left_action[player_index])
+	var move_right = Input.is_action_pressed(right_action[player_index])
 	var down = Input.is_action_pressed(down_action[player_index])
+	var up = Input.is_action_pressed(up_action[player_index])
+	var jump = Input.is_action_pressed(jump_action[player_index])
 	var grab = Input.is_action_just_pressed(grab_action[player_index])
 	
 

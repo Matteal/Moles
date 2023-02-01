@@ -1,6 +1,6 @@
 [gd_scene load_steps=38 format=2]
 
-[ext_resource path="res://scenes/game/characters/KinematicBody2D.gd" type="Script" id=1]
+[ext_resource path="res://scenes/game/characters/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ninja_sheet_4.png" type="Texture" id=2]
 
 [sub_resource type="PhysicsMaterial" id=28]
@@ -206,6 +206,7 @@ shape = SubResource( 29 )
 z_index = 5
 frames = SubResource( 26 )
 animation = "idle"
+frame = 2
 speed_scale = 4.0
 playing = true
 
