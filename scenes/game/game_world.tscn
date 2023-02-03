@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/game/levels/cave.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/game/blocks/rectangle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/game/blocks/generator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/game/blocks/square.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/game/blocks/slope.tscn" type="PackedScene" id=6]
 
@@ -14,9 +13,17 @@ var num_players: int = 2 # number of joysticks connected
 var players: Array = [] # array to hold player instances
 var input_maps: Array = [] # array to hold input_map dict for each player
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
+var window_height = ProjectSettings.get_setting(\"display/window/size/height\")
+var window_width = ProjectSettings.get_setting(\"display/window/size/width\")
+
+var spawn_corner_bottom = Vector2(160, 0)
+var spawn_corner_up = Vector2(850, -300)
+
+#load blocks
+var Square = load(\"res://scenes/game/blocks/square.tscn\")
+var Rectangle = load(\"res://scenes/game/blocks/rectangle.tscn\")
+var Slope = load(\"res://scenes/game/blocks/slope.tscn\")
+
 var Player = load(\"res://scenes/game/characters/player.tscn\")
 
 # Called when the node enters the scene tree for the first time.
@@ -36,11 +43,25 @@ func _ready():
 	pass # Replace with function body.
 	
 
+func _process(delta):
+	if Input.is_action_just_pressed(\"generate\"):
+		generate()
+		
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
+func generate():
+	var crate
+	match randi()%3:
+		0:
+			crate = Square.instance()
+		1:
+			crate = Rectangle.instance()
+		2:
+			crate = Slope.instance()
+	get_node(\"obstacles\").add_child(crate)
+	var pos = Vector2(randi()%int(spawn_corner_up.x - spawn_corner_bottom.x), -randi()%int(spawn_corner_up.y - spawn_corner_bottom.y))
+	crate.global_transform.origin = pos + spawn_corner_bottom
 "
 
 [node name="Game_world" type="Node"]
@@ -61,13 +82,9 @@ position = Vector2( 629, 373 )
 position = Vector2( 478, 482 )
 
 [node name="Level" parent="." instance=ExtResource( 1 )]
-position = Vector2( 27, -29 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
-
-[node name="generator" parent="." instance=ExtResource( 4 )]
-position = Vector2( 478, 99 )
