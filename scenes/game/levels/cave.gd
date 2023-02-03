@@ -37,6 +37,7 @@ func clear_level():
 	collision_detection.get_parent().collision_mask = 1
 	camera_next_position = camera_initial_position - Vector2(0, next_level_step)
 	interpolation = 0.0
+	get_tree().paused = true
 	unpause(PAUSE_TIME)
 
 func _on_NextLevel_body_entered(body):
@@ -44,7 +45,6 @@ func _on_NextLevel_body_entered(body):
 		body.get_parent().remove_child(body)
 		
 	collision_detection.get_parent().set_deferred("collision_mask", 0) #delete collision detection after all resolutions
-	get_tree().paused = true
 	pass # Replace with function body.
 
 func unpause(sleep):
