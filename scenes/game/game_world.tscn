@@ -16,8 +16,12 @@ var input_maps: Array = [] # array to hold input_map dict for each player
 var window_height = ProjectSettings.get_setting(\"display/window/size/height\")
 var window_width = ProjectSettings.get_setting(\"display/window/size/width\")
 
-var spawn_corner_bottom = Vector2(160, 0)
+var spawn_corner_bottom = Vector2(160, -20)
 var spawn_corner_up = Vector2(850, -300)
+
+var SPAWN_VELOCITY_Y = 20
+var SPAWN_MAX_VELOCITY_X = 50.0
+var SPAWN_MAX_ANGLE = 15
 
 #load blocks
 var Square = load(\"res://scenes/game/blocks/square.tscn\")
@@ -60,7 +64,9 @@ func generate():
 		2:
 			crate = Slope.instance()
 	get_node(\"obstacles\").add_child(crate)
+	crate.set_linear_velocity(Vector2(randf()*SPAWN_MAX_VELOCITY_X*2 - SPAWN_MAX_VELOCITY_X, SPAWN_VELOCITY_Y))
 	var pos = Vector2(randi()%int(spawn_corner_up.x - spawn_corner_bottom.x), -randi()%int(spawn_corner_up.y - spawn_corner_bottom.y))
+	crate.set_angular_velocity(randf()*SPAWN_MAX_ANGLE*2 - SPAWN_MAX_ANGLE)
 	crate.global_transform.origin = pos + spawn_corner_bottom
 "
 
