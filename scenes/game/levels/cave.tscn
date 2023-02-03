@@ -6,14 +6,14 @@
 [ext_resource path="res://assets/sprites/background/Background_3.png" type="Texture" id=4]
 [ext_resource path="res://scenes/game/levels/cave.gd" type="Script" id=5]
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 512, 90 )
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 52.5, 651 )
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 425, 45.5 )
-
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 512.5, 107 )
+extents = Vector2( 512.5, 90 )
 
 [node name="Cave" type="Node2D"]
 script = ExtResource( 5 )
@@ -47,6 +47,12 @@ anchor_bottom = 1.0
 texture = ExtResource( 4 )
 expand = true
 
+[node name="ground2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground2"]
+position = Vector2( 512, 600 )
+shape = SubResource( 2 )
+
 [node name="Walls" type="Node" parent="."]
 
 [node name="LeftBorder2" type="StaticBody2D" parent="Walls"]
@@ -60,12 +66,6 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightBorder2"]
 position = Vector2( 915, 324 )
 shape = SubResource( 1 )
-
-[node name="ground2" type="StaticBody2D" parent="Walls"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/ground2"]
-position = Vector2( 491, 557 )
-shape = SubResource( 2 )
 
 [node name="ceilling" type="StaticBody2D" parent="Walls"]
 
@@ -83,7 +83,13 @@ position = Vector2( 785, 460 )
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevel"]
-position = Vector2( 511.5, 495 )
+position = Vector2( 512, 510 )
 shape = SubResource( 3 )
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
 
 [connection signal="body_entered" from="NextLevel" to="." method="_on_NextLevel_body_entered"]
