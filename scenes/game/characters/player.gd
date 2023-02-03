@@ -193,9 +193,9 @@ func grab (object):
 	
 	held_object.get_parent().set_deferred("remove_child", held_object)
 	set_deferred("add_child", held_object)
-	held_object.set_deferred("mode", RigidBody2D.MODE_STATIC)
 	held_object.collision_mask = 0
 	held_object.collision_layer = 0
+	held_object.set_deferred("mode", RigidBody2D.MODE_STATIC)
 	
 	
 	

@@ -6,10 +6,14 @@ onready var collision_detection = get_node("NextLevel").get_child(0)
 onready var ground = get_node("ground2").get_child(0)
 onready var next_level_step = get_node("NextLevel").get_child(0).get_shape().get_extents().y
 
+var camera_initial_position = Vector2.ZERO
+var camera_next_position : Vector2
+var interpolation : float
 
+const PAUSE_TIME = 2.0
 # Declare member variables here. Examples:
-# var a = 2
 # var b = "text"
+# var a = 2
 
 
 
@@ -20,17 +24,20 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time singet_tree().paused = falsee the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if get_tree().paused == true:
+		$Camera.set_position(camera_initial_position.linear_interpolate(camera_next_position, interpolation))
+		interpolation += delta
+		if(interpolation > 1.0):
+			interpolation = 1.0
+			camera_initial_position = camera_next_position
+	pass
 
 func clear_level():
 	collision_detection.get_parent().collision_mask = 1
-	print(next_level_step)
-	ground.set_position(ground.get_position() - Vector2(0, next_level_step))
-	print(ground.get_position())
-	collision_detection.set_position(collision_detection.get_position() - Vector2(0, next_level_step))
-	unpause(2)
+	camera_next_position = camera_initial_position - Vector2(0, next_level_step)
+	interpolation = 0.0
+	unpause(PAUSE_TIME)
 
 func _on_NextLevel_body_entered(body):
 	if(body.get_parent() == get_node("../obstacles")):
@@ -42,9 +49,9 @@ func _on_NextLevel_body_entered(body):
 
 func unpause(sleep):
 	yield(get_tree().create_timer(sleep), "timeout")
-	print(get_node("NextLevel").get_child(0).get_position())
-	print(get_node("NextLevel").get_child(0).get_shape().get_extents())
 	
-	print(get_node("ground2").get_child(0).get_position())
-	print(get_node("ground2").get_child(0).get_shape().get_extents())
+	# setting up the ground / Camera position
+	ground.set_position(ground.get_position() - Vector2(0, next_level_step))
+	collision_detection.set_position(collision_detection.get_position() - Vector2(0, next_level_step))
+	
 	get_tree().paused = false
