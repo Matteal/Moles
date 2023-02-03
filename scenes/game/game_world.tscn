@@ -48,6 +48,11 @@ func _process(delta):
 	if Input.is_action_just_pressed(\"generate\"):
 		generate()
 		
+	if Input.is_action_just_pressed(\"clear_level\"):
+		$Level.clear_level()
+		for i in range(15):
+			generate()
+		
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
