@@ -3,6 +3,7 @@ extends Node
 var game_scene = load("res://scenes/game/game_world.tscn")
 
 func _ready():
+	randomize()
 	
 	var game_world = game_scene.instance()
 	add_child(game_world)

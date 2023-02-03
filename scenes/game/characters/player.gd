@@ -160,6 +160,7 @@ func _integrate_forces(s):
 	var dir_ray = int(move_left) * Vector2.LEFT + int(move_right) * Vector2.RIGHT \
 				+ int(up) * Vector2.UP + int(down) * Vector2.DOWN
 	$RayCast2D.set_cast_to(dir_ray.normalized() * 35)
+		
 	if grab:
 		grab_detection(lv)
 	if held_object:
@@ -176,7 +177,8 @@ func _integrate_forces(s):
 
 func grab_detection(lv):
 	if held_object != null:
-		throw_object(lv)
+		if $RayCast2D.get_cast_to() != Vector2.ZERO: #throw only if a direction is given
+			throw_object(lv)
 	elif $RayCast2D.get_collider():
 		if $RayCast2D.get_collider().get_parent().name == "obstacles":
 			grab($RayCast2D.get_collider())
